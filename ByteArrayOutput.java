@@ -1,25 +1,16 @@
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.io.*;
 
 public class ByteArrayOutput {
     public static void main(String[] args) {
-        byte[] byteArray = new byte[100];
-        for (int i = 0; i < byteArray.length; i++) {
-            byteArray[i] = (byte) (i + 1);
-        }
+        byte[] b = new byte[100];
+        for (byte i = 0; i < b.length; i++) b[i]=i;
 
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
         try {
-            bos.write(byteArray);
-        } catch (IOException e) {
-            e.printStackTrace();
+            InputStream is = new ByteArrayInputStream(b);
+            for(byte i = 0; i < b.length; i++) System.out.print(is.read()+" ");
         }
-
-        byte[] outputByteArray = bos.toByteArray();
-
-        System.out.println("Output byte array:");
-        for (byte b : outputByteArray) {
-            System.out.print(b + " ");
+        catch (IOException e) {
+            System.err.println(e);
         }
     }
 }
