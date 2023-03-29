@@ -1,47 +1,36 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 
 public class bai5week2 {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String fileName;
+        System.out.print("Nhap ten tep tin: ");
+        String fileName = br.readLine();
 
-        try {
-            System.out.print("Nhập tên tệp tin: ");
-            fileName = br.readLine();
+        File file = new File(fileName);
+        FileWriter fw = new FileWriter(file);
 
-            // Ghi tệp tin
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileName), "UTF-8"));
-
-            System.out.print("Nhập số lượng chuỗi: ");
-            int n = Integer.parseInt(br.readLine());
-
-            for (int i = 1; i <= n; i++) {
-                System.out.print("Nhập chuỗi thứ " + i + ": ");
-                String line = br.readLine();
-                line = line.toUpperCase();
-                bw.write(line);
-                bw.newLine();
+        System.out.println("Nhap cac chuoi( 'quit' de ket thuc nhap chuoi):");
+        String line;
+        do {
+            line = br.readLine();
+            if (!line.equals("quit")) {
+                String upperCaseLine = line.toUpperCase();
+                fw.write(upperCaseLine + "\n");
             }
+        } while (!line.equals("quit"));
 
-            bw.close();
+        fw.close();
+        br.close();
 
-            // Đọc tệp tin
-            BufferedReader fr = new BufferedReader(new FileReader(fileName));
-
-            String line;
-            while ((line = fr.readLine()) != null) {
-                System.out.println(line);
-            }
-
-            fr.close();
-        } catch (IOException e) {
-            System.out.println("Lỗi: " + e.getMessage());
+        FileReader fr = new FileReader(file);
+        BufferedReader reader = new BufferedReader(fr);
+        System.out.println("Cac chuoi da ghi vao tep tin:");
+        String str;
+        while ((str = reader.readLine()) != null) {
+            System.out.println(str);
         }
+
+        fr.close();
+        reader.close();
     }
 }
