@@ -1,44 +1,66 @@
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.util.Arrays;
+import java.io.*;
+import java.util.*;
 
 public class GhiDaySo {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        // Tạo một tệp tin với tên "dayso.dat"
         String fileName = "dayso.dat";
-        int[] numbers = { 10, 50, 30, 40, 20 };
+        File file = new File(fileName);
+        file.createNewFile();
 
-        try (RandomAccessFile raf = new RandomAccessFile(fileName, "rw")) {
-            // Ghi file
-            for (int number : numbers) {
-                raf.writeInt(number);
-            }
+        // Tạo một đối tượng RandomAccessFile để ghi dữ liệu vào tệp tin
+        RandomAccessFile raf = new RandomAccessFile(file, "rw");
 
-            // Đọc file
-            long fileLength = raf.length();
-            raf.seek(0);
-
-            int[] readNumbers = new int[(int) (fileLength / 4)];
-            for (int i = 0; i < fileLength / 4; i++) {
-                readNumbers[i] = raf.readInt();
-            }
-
-            // Sắp xếp và ghi file
-            Arrays.sort(readNumbers);
-            raf.setLength(0);
-
-            for (int number : readNumbers) {
-                raf.writeInt(number);
-            }
-
-            // In dãy số
-            raf.seek(0);
-
-            System.out.print("Dãy số: ");
-            for (int i = 0; i < fileLength / 4; i++) {
-                System.out.print(raf.readInt() + " ");
-            }
-        } catch (IOException e) {
-            System.out.println("Lỗi: " + e.getMessage());
+        // Tạo một mảng ngẫu nhiên gồm 10 số nguyên
+        int[] arr = new int[10];
+        Random random = new Random();
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = random.nextInt(100);
         }
+
+        // Ghi mảng số nguyên vào tệp tin
+        for (int i = 0; i < arr.length; i++) {
+            raf.writeInt(arr[i]);
+        }
+
+        // Đóng đối tượng RandomAccessFile
+        raf.close();
+
+        // Mở đối tượng RandomAccessFile để đọc dữ liệu
+        raf = new RandomAccessFile(file, "rw");
+
+        // Đọc dữ liệu từ tệp tin và hiển thị lên màn hình
+        System.out.println("day so nguyen trong tep tin ban dau:");
+        for (int i = 0; i < arr.length; i++) {
+            int num = raf.readInt();
+            System.out.print(num + " ");
+        }
+
+        // Sắp xếp mảng số nguyên
+        Arrays.sort(arr);
+
+        // Đưa con trỏ đọc về đầu tệp tin
+        raf.seek(0);
+
+        // Ghi lại mảng số nguyên vào tệp tin
+        for (int i = 0; i < arr.length; i++) {
+            raf.writeInt(arr[i]);
+        }
+
+        // Đóng đối tượng RandomAccessFile
+        raf.close();
+
+        // Mở đối tượng RandomAccessFile để đọc dữ liệu
+        raf = new RandomAccessFile(file, "r");
+
+        // Đọc dữ liệu từ tệp tin và hiển thị lên màn hình
+        System.out.println("\nday so nguyen trong tep tin sau khi sap xep:");
+        for (int i = 0; i < arr.length; i++) {
+            int num = raf.readInt();
+            System.out.print(num + " ");
+        }
+
+        // Đóng đối tượng RandomAccessFile
+        raf.close();
     }
 }
