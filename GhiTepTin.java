@@ -2,7 +2,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class GhiDocTep {
+public class GhiTepTin {
     public static void main(String[] args) {
         String fileName = "test.txt";
         String content = "Hello, world!";
