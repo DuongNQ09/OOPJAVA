@@ -1,7 +1,7 @@
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-public class GhiDocTepNgauNhien {
+public class GhiDaySo {
     public static void main(String[] args) {
         String fileName = "dayso.dat";
         int[] numbers = { 10, 20, 30, 40, 50 };
